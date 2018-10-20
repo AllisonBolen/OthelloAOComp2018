@@ -25,11 +25,11 @@ def detectCorners(validMoveList):
     for gamePiece in validMoveList: # get the game piece
         for choice in gamePiece: #get the move on that piece that is valid
             if(choice[0] in badCorners): # mark as bad corner
-                goodCor= False
-                move + goodCor
+                goodCor = False
+                choice.append(goodCor)
             if(choice[0] in goodCorners): # mark as good corner
                 goodCor = True
-                choice + goodCor
+                choice.append(goodCor)
 
 def getValidMoves(board, player):
     '''A list or single value of all the possible moves we could make'''
