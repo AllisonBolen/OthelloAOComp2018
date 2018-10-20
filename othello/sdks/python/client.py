@@ -7,6 +7,9 @@ import socket
 def get_move(player, board):
     # TODO determine valid moves
     # TODO determine best move
+    for row in board:
+        print(str(row))
+
     print("Board:"+str(board))
     print("Player:"+str(player))
     me, them = playerIds(player)
@@ -125,7 +128,7 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][col] is member): # if we found ourselves make it stop calculating becaseu tahts a new poitn to check from not our job righ tnow
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0): # if we never hit ourselves and we are flipping more than 0 add it as a spot
-            validMoves.append([[rowCopy-1,col],enemyCount])
+            validMoves.append([[rowCopy,col],enemyCount])
     #check down
     if(row is not 7):
         #check until we hit the end of enemey
@@ -138,7 +141,7 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][col] is member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy+1,col],enemyCount])
+            validMoves.append([[rowCopy,col],enemyCount])
     #left
     if(col is not 0):
         colCopy = col
@@ -150,7 +153,7 @@ def nexToPlayer(member, row, col, board):
             if(board[row][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[row,colCopy-1],enemyCount])
+            validMoves.append([[row,colCopy],enemyCount])
 
     #check right
     if(col is not 7):
@@ -163,7 +166,7 @@ def nexToPlayer(member, row, col, board):
             if(board[row][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[row,colCopy+1],enemyCount])
+            validMoves.append([[row,colCopy],enemyCount])
 
     #check dia up left
     if(row is not 0 and col is not 0):
@@ -178,7 +181,7 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy-1,colCopy-1],enemyCount])
+            validMoves.append([[rowCopy,colCopy],enemyCount])
     #check dia down left
     if(row is not 7 and col is not 0):
         colCopy = col
@@ -192,7 +195,7 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy+1,colCopy-1],enemyCount])
+            validMoves.append([[rowCopy,colCopy],enemyCount])
     #check dia up right
     if(row is not 0 and col is not 7):
         colCopy = col
@@ -206,7 +209,7 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy-1,colCopy+1],enemyCount])
+            validMoves.append([[rowCopy,colCopy],enemyCount])
     #check dia down right
     if(row is not 7 and col is not 7):
         colCopy = col
@@ -220,7 +223,7 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy+1,colCopy+1],enemyCount])
+            validMoves.append([[rowCopy,colCopy],enemyCount])
 
     #return all the values that we found we can hit
     return validMoves
