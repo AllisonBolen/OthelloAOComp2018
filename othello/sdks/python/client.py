@@ -43,15 +43,34 @@ def playerIds(member):
     return (member, them)
 
 def bestOfFlip(validMoveList):
-    maxPoint = 0;
+    maxPoint = 0
     print("Maxing flip...")
     best = []
-    for gamePiece in validMoveList: # get the game piec
-        for choice in range(1, len(gamePiece)):
-            if(gamePiece[choice][1] > maxPoint):
-                maxPoint = gamePiece[choice][1]
-                best = gamePiece[choice][0]
+    if isBad(validMoveList):
+        for gamePiece in validMoveList: # get the game piec
+            for choice in range(1, len(gamePiece)):
+                if(gamePiece[choice][1] > maxPoint):
+                    maxPoint = gamePiece[choice][1]
+                    best = gamePiece[choice][0]
+    else:
+        for gamePiece in validMoveList: # get the game piec
+            for choice in range(1, len(gamePiece)):
+                if(gamePiece[choice][1] > maxPoint and gamePiece[choice][2] is not 0):
+                    maxPoint = gamePiece[choice][1]
+                    best = gamePiece[choice][0]
     return best
+
+def isBad(validMoveList):
+    numBad = 0
+    numMoves = 0
+    for gamePiece in validMoveList: # get the game piec
+        for choice in range(1, len(gamePiece)): #get the move on that piece that is valid
+            numMoves += 1
+            if(gamePiece[choice][2] is 0):
+                numBad += 1
+    if numBad is numMoves:
+        return True
+    return False
 
 def mobility(board, member, validMoveList):
     print("Mobility for player: "+ str(member)+"...")
