@@ -230,7 +230,8 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy + 1,colCopy + 1],enemyCount])
+           if (rowCopy + 1) <= 7 and (colCopy + 1) <= 7:
+               validMoves.append([[rowCopy + 1,colCopy + 1],enemyCount])
 
     #return all the values that we found we can hit
     return validMoves
