@@ -9,19 +9,53 @@ def get_move(player, board):
     # TODO determine best move
     print("Board:"+str(board))
     print("Player:"+str(player))
-    me = player
+    me, them = playerIds(player)
     #get valid move socket
     validMoveList = getValidMoves(board, me)
+    print("Before Corners Valid Moves: " + str(validMoveList))
     markCorners(validMoveList)
-    print("Valid Moves: " + str(validMoveList))
+    print("After corners Valid Moves: " + str(validMoveList))
     # make a corner move if they exist
     for gamePiece in validMoveList: # get the game piec
-        for choice in gamePiece: #get the move on that piece that is valid
-            if(choice[2] is 1):
-                return choice[0]
+        print(str(gamePiece))
+        for choice in range(1, len(gamePiece)): #get the move on that piece that is valid
+            if(gamePiece[choice][2] is 1):
+                return gamePiece[choice][0]
+    # mobility check
+    # mobility(board, me, validMoveList)
 
     print("Valid Moves: " + str(validMoveList))
     return [4, 2] # (y, x) or (col, row)
+
+def playerIds(member):
+    '''
+    set player ids
+    '''
+
+    if member is 1:
+        them = 2
+    else:
+        them = 1
+    return (member, them)
+
+def mobility(board, member, validMoveList):
+    print("Mobility for player: "+ str(member))
+    me, them = playerIds(member)
+    #for everything in OUR valid move validMoveList
+    for piece in validMoveList:
+        for choice in piece:
+            boardCopy = board
+            makeBoard(boardCopy, choice[0][0],choice[0][1], me) #makes a new board
+            # set a fake board wiht that move
+            # set mobility to 0
+            # get valid moves for opponent !me
+            # for each of those moves for the opponent
+                # get the number of moves we can make
+                # mobility += length of new valid move validMoveList
+            #append those values to the
+
+def makeBoard(board, row, col, me):
+    board[row][col] = me
 
 def markCorners(validMoveList):
     '''
@@ -32,35 +66,38 @@ def markCorners(validMoveList):
     print(type(goodCorners))
     #bad corner list
     badCorners = [[0,1],[1,1],[1,0],[0,6],[1,6],[1,7],[6,0],[6,1],[7,1],[7,6],[6,6],[6,7]]
-    for gamePiece in validMoveList: # get the game piece
-        for choice in gamePiece: #get the move on that piece that is valid
-            if(choice[0] in badCorners): # mark as bad corner
+    for gamePiece in validMoveList: # get the game piec
+        print("This"+str(gamePiece))
+        for choice in range(1, len(gamePiece)): #get the move on that piece that is valid
+            print("that: "+str(gamePiece[choice]))
+            if(gamePiece[choice][0] in badCorners): # mark as bad corner
                 goodCor = 0
-                choice.append(goodCor)
-            elif(choice[0] in goodCorners): # mark as good corner
+                gamePiece[choice].append(goodCor)
+            elif(gamePiece[choice][0] in goodCorners): # mark as good corner
                 goodCor = 1
-                choice.append(goodCor)
+                gamePiece[choice].append(goodCor)
             else: #nothing but its even across all
                 goodCor = 3
-                choice.append(goodCor)
+                gamePiece[choice].append(goodCor)
 
-def getValidMoves(board, me):
+def getValidMoves(board, member):
     '''A list or single value of all the possible moves we could make'''
-
+    print("Getting Valid Moves for player: "+str(member))
     validMoves = []
     for row in range(0, len(board)):
         for col in range(0, len(board[row])):
-            if(board[row][col] is me):  # is location us
-                validMoves.append(nexToPlayer(me, row, col, board))
+            if(board[row][col] is member):  # is location us
+                validMoves.append(nexToPlayer(member, row, col, board))
     return validMoves
 
-def nexToPlayer(me, row, col, board):
+def nexToPlayer(member, row, col, board):
     '''
         This will search all directions from our current
         spot to find all possible next valid moves for that spot
     '''
     #check up
     validMoves = []
+    validMoves.append([row,col])
     if(row is not 0):
         #check until we hit the end of a string of enemys
         rowCopy = row
@@ -71,7 +108,7 @@ def nexToPlayer(me, row, col, board):
         while(rowCopy is not 0 and board[rowCopy-1][col] is not 0 and not boolFoundMe):
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
-            if(board[rowCopy][col] is me): # if we found ourselves make it stop calculating becaseu tahts a new poitn to check from not our job righ tnow
+            if(board[rowCopy][col] is member): # if we found ourselves make it stop calculating becaseu tahts a new poitn to check from not our job righ tnow
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0): # if we never hit ourselves and we are flipping more than 0 add it as a spot
             validMoves.append([[rowCopy-1,col],enemyCount])
@@ -84,7 +121,7 @@ def nexToPlayer(me, row, col, board):
         while(rowCopy is not 7 and board[rowCopy+1][col] is not 0 and not boolFoundMe):
             rowCopy = rowCopy + 1
             enemyCount = enemyCount + 1
-            if(board[rowCopy][col] is  me):
+            if(board[rowCopy][col] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
             validMoves.append([[rowCopy+1,col],enemyCount])
@@ -96,7 +133,7 @@ def nexToPlayer(me, row, col, board):
         while(colCopy is not 0 and board[row][colCopy-1] is not 0 and not boolFoundMe):
             colCopy = colCopy - 1
             enemyCount = enemyCount + 1
-            if(board[row][colCopy] is  me):
+            if(board[row][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
             validMoves.append([[row,colCopy-1],enemyCount])
@@ -109,7 +146,7 @@ def nexToPlayer(me, row, col, board):
         while(colCopy is not 7 and board[row][colCopy+1] is not 0 and not boolFoundMe):
             colCopy = colCopy + 1
             enemyCount = enemyCount + 1
-            if(board[row][colCopy] is  me):
+            if(board[row][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
             validMoves.append([[row,colCopy+1],enemyCount])
@@ -124,7 +161,7 @@ def nexToPlayer(me, row, col, board):
             colCopy = colCopy - 1
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
-            if(board[rowCopy][colCopy] is  me):
+            if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
             validMoves.append([[rowCopy-1,colCopy-1],enemyCount])
@@ -138,7 +175,7 @@ def nexToPlayer(me, row, col, board):
             colCopy = colCopy - 1
             rowCopy = rowCopy + 1
             enemyCount = enemyCount + 1
-            if(board[rowCopy][colCopy] is  me):
+            if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
             validMoves.append([[rowCopy+1,colCopy-1],enemyCount])
@@ -152,7 +189,7 @@ def nexToPlayer(me, row, col, board):
             colCopy = colCopy + 1
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
-            if(board[rowCopy][colCopy] is  me):
+            if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
             validMoves.append([[rowCopy-1,colCopy+1],enemyCount])
@@ -166,7 +203,7 @@ def nexToPlayer(me, row, col, board):
             colCopy = colCopy + 1
             rowCopy = rowCopy + 1
             enemyCount = enemyCount + 1
-            if(board[rowCopy][colCopy] is  me):
+            if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
             validMoves.append([[rowCopy+1,colCopy+1],enemyCount])
