@@ -119,7 +119,7 @@ def nexToPlayer(member, row, col, board):
         boolFoundMe = False
         boolFoundEnemy = False
         #while(we arent at a border and the next spot is not empty and we havent yet run into ourselves)
-        while((rowCopy - 1 )> -1 and board[rowCopy-1][col] is not 0 and not boolFoundMe):
+        while((rowCopy - 1 > -1) and board[rowCopy-1][col] is not 0 and not boolFoundMe):
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
             if(board[rowCopy][col] is member): # if we found ourselves make it stop calculating becaseu tahts a new poitn to check from not our job righ tnow
