@@ -12,6 +12,8 @@ def get_move(player, board):
   #get valid move socket
   validMoveList = getValidMoves(board, player)
   markCorners(validMoveList)
+  print("Valid Moves: " + str(validMoveList))
+  # make a corner move if they exist
   for gamePiece in validMoveList: # get the game piec
     for choice in gamePiece: #get the move on that piece that is valid
         if(choice[2] is 1):
