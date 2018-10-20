@@ -7,7 +7,139 @@ import socket
 def get_move(player, board):
   # TODO determine valid moves
   # TODO determine best move
-  return [2, 3]
+  print("Board:"+str(board))
+  print("Player:"+str(player))
+  validMoveList = getValidMoves(board, player)
+
+
+  return [4, 2] # (y, x) or (col, row)
+
+'''A list or single value of all the possible moves we could make'''
+def getValidMoves(board, player):
+    validMoves = []
+    countRow = 0
+    countCol
+    for row in range(len(board)):
+        for col in range(len(row)):
+            if(board[row,col] is player):  # is location us
+                validMoves = nexToPlayer(player, row, col)
+
+
+def nexToPlayer(player, row, col):
+    #check up
+    validMoves = []
+    if(row is not 0):
+        #check until we hit the end of a string of enemys
+        rowCopy = row
+        enemyCount = 0
+        boolFoundMe = False
+        #while(we arent at a border and the next spot is not empty and we havent yet run into ourselves)
+        while(rowCopy is not 0 and board[rowCopy-1][col] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            rowCopy = rowCopy - 1
+            enemyCount = enemyCount + 1
+            if(board[rowCopy-1][col] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((rowCopy,col,enemyCount))
+    #check down
+    if(row is not 7):
+        #check until we hit the end of enemey
+        rowCopy = row
+        enemyCount = 0
+        boolFoundMe = False
+        while(rowCopy is not 7 and board[rowCopy+1][col] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            rowCopy = rowCopy + 1
+            enemyCount = enemyCount + 1
+            if(board[rowCopy+1][col] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((rowCopy,col,enemyCount))
+    #left
+    if(col is not 0):
+        colCopy = col
+        enemyCount = 0
+        boolFoundMe = False
+        while(colCopy is not 0 and board[row][colCopy-1] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            colCopy = colCopy - 1
+            enemyCount = enemyCount + 1
+            if(board[row][colCopy-1] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((row,colCopy,enemyCount))
+
+    #check right
+    if(col is not 7):
+        colCopy = col
+        enemyCount = 0
+        boolFoundMe = False
+        while(colCopy is not 7 and board[row][colCopy+1] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            colCopy = colCopy + 1
+            enemyCount = enemyCount + 1
+            if(board[row][colCopy+1] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((row,colCopy,enemyCount))
+
+    #check dia up left
+    if(row is not 0 and col is not 0):
+        colCopy = col
+        rowCopy = row
+        enemyCount = 0
+        boolFoundMe = False
+        #while(col is not a border and row is nto a border and row col is not empty and it is not me)
+        while(colCopy is not 0 and rowCopy is not 0 and board[rowCopy-1][colCopy-1] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            colCopy = colCopy - 1
+            rowCopy = rowCopy - 1
+            enemyCount = enemyCount + 1
+            if(board[rowCopy-1][colCopy-1] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((rowCopy,colCopy,enemyCount))
+    #check dia down left
+    if(row is not 7 and col is not 0):
+        colCopy = col
+        rowCopy = row
+        enemyCount = 0
+        boolFoundMe = False
+        while(colCopy is not 0 and rowCopy is not 7 and board[rowCopy+1][colCopy-1] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            colCopy = colCopy - 1
+            rowCopy = rowCopy + 1
+            enemyCount = enemyCount + 1
+            if(board[rowCopy+1][colCopy-1] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((rowCopy,colCopy,enemyCount))
+    #check dia up right
+    if(row is not 0 and col is not 7):
+        colCopy = col
+        rowCopy = row
+        enemyCount = 0
+        boolFoundMe = False
+        while(colCopy is not 7 and rowCopy is not 0 and board[rowCopy-1][colCopy+1] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            colCopy = colCopy + 1
+            rowCopy = rowCopy - 1
+            enemyCount = enemyCount + 1
+            if(board[rowCopy-1][colCopy+1] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((rowCopy,colCopy,enemyCount))
+    #check dia down right
+    if(row is not 7 and col is not 7):
+        colCopy = col
+        rowCopy = row
+        enemyCount = 0
+        boolFoundMe = False
+        while(colCopy is not 7 and rowCopy is not 0 and board[rowCopy+1][colCopy+1] is not 0 and not boolFoundMe): # if the postion above me is not empty and not the end and not also me look for another spot above me
+            colCopy = colCopy + 1
+            rowCopy = rowCopy + 1
+            enemyCount = enemyCount + 1
+            if(board[rowCopy+1][colCopy+1] is not player):
+                boolFoundMe = True
+        if(not boolFoundMe): # if we never found ourselves then the end of teh line is good
+            validMoves.append((rowCopy,colCopy,enemyCount))
+            
+    #return all the values that we found we can hit
+    return validMoves
 
 def prepare_response(move):
   response = '{}\n'.format(move).encode()
