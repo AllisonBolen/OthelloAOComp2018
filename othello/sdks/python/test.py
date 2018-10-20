@@ -3,8 +3,7 @@ import client
 
 class TestGetMove(unittest.TestCase):
   def test_get_move_returns_a_valid_move(self):
-    board = [
-    [0, 0, 0, 0, 0, 0, 0, 0], 
+    board = [[0, 0, 0, 0, 0, 0, 0, 0], 
     [0, 2, 0, 0, 0, 1, 2, 0], 
     [0, 0, 1, 0, 0, 1, 0, 0], 
     [0, 0, 2, 0, 0, 0, 0, 0], 

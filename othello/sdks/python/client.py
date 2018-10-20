@@ -11,12 +11,13 @@ def get_move(player, board):
   print("Player:"+str(player))
   #get valid move socket
   validMoveList = getValidMoves(board, player)
-  detectCorners(validMoveList)
+  markCorners(validMoveList)
 
   print("Valid Moves: " + str(validMoveList))
   return [4, 2] # (y, x) or (col, row)
 
-def detectCorners(validMoveList):
+def markCorners(validMoveList):
+
     #good corner list
     goodCorners = [(0,0),(0,7),(7,7),(7,0)]
     print(type(goodCorners))
@@ -25,10 +26,13 @@ def detectCorners(validMoveList):
     for gamePiece in validMoveList: # get the game piece
         for choice in gamePiece: #get the move on that piece that is valid
             if(choice[0] in badCorners): # mark as bad corner
-                goodCor = False
+                goodCor = 0
                 choice.append(goodCor)
-            if(choice[0] in goodCorners): # mark as good corner
-                goodCor = True
+            elif(choice[0] in goodCorners): # mark as good corner
+                goodCor = 1
+                choice.append(goodCor)
+            else: #nothing but its even across all
+                goodCor = 3
                 choice.append(goodCor)
 
 def getValidMoves(board, player):
