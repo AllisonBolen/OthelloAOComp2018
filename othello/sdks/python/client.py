@@ -122,13 +122,14 @@ def nexToPlayer(member, row, col, board):
         boolFoundMe = False
         boolFoundEnemy = False
         #while(we arent at a border and the next spot is not empty and we havent yet run into ourselves)
-        while((rowCopy - 1 )> -1 and board[rowCopy-1][col] is not 0 and not boolFoundMe):
+        while((rowCopy - 1 > -1) and board[rowCopy-1][col] is not 0 and not boolFoundMe):
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
             if(board[rowCopy][col] is member): # if we found ourselves make it stop calculating becaseu tahts a new poitn to check from not our job righ tnow
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0): # if we never hit ourselves and we are flipping more than 0 add it as a spot
-            validMoves.append([[rowCopy,col],enemyCount])
+            if ((rowCopy - 1) >= 0):
+                validMoves.append([[rowCopy - 1,col],enemyCount])
     #check down
     if(row is not 7):
         #check until we hit the end of enemey
@@ -141,7 +142,8 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][col] is member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy,col],enemyCount])
+            if ((rowCopy + 1) <= 7):
+                validMoves.append([[rowCopy + 1,col],enemyCount])
     #left
     if(col is not 0):
         colCopy = col
@@ -153,7 +155,8 @@ def nexToPlayer(member, row, col, board):
             if(board[row][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[row,colCopy],enemyCount])
+            if ((colCopy - 1) >= 0):
+                validMoves.append([[row,colCopy - 1],enemyCount])
 
     #check right
     if(col is not 7):
@@ -166,7 +169,8 @@ def nexToPlayer(member, row, col, board):
             if(board[row][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[row,colCopy],enemyCount])
+            if (colCopy + 1) <= 7:
+                validMoves.append([[row,colCopy + 1],enemyCount])
 
     #check dia up left
     if(row is not 0 and col is not 0):
@@ -181,7 +185,8 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy,colCopy],enemyCount])
+            if (rowCopy - 1) >= 0 and (colCopy - 1) >= 0:
+                validMoves.append([[rowCopy - 1,colCopy - 1],enemyCount])
     #check dia down left
     if(row is not 7 and col is not 0):
         colCopy = col
@@ -195,7 +200,8 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy,colCopy],enemyCount])
+            if (rowCopy + 1) <= 7 and (colCopy - 1) >= 0:
+                validMoves.append([[rowCopy + 1,colCopy - 1],enemyCount])
     #check dia up right
     if(row is not 0 and col is not 7):
         colCopy = col
@@ -209,7 +215,8 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy,colCopy],enemyCount])
+            if (rowCopy - 1) >= 0 and (colCopy + 1) <= 7:
+                validMoves.append([[rowCopy - 1,colCopy + 1],enemyCount])
     #check dia down right
     if(row is not 7 and col is not 7):
         colCopy = col
@@ -223,7 +230,7 @@ def nexToPlayer(member, row, col, board):
             if(board[rowCopy][colCopy] is  member):
                 boolFoundMe = True
         if(not boolFoundMe and enemyCount is not 0):
-            validMoves.append([[rowCopy,colCopy],enemyCount])
+            validMoves.append([[rowCopy + 1,colCopy + 1],enemyCount])
 
     #return all the values that we found we can hit
     return validMoves
