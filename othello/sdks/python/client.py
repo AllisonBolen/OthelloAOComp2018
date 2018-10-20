@@ -17,15 +17,16 @@ def get_move(player, board):
     print("After corners Valid Moves: " + str(validMoveList))
     # make a corner move if they exist
     for gamePiece in validMoveList: # get the game piec
-        print(str(gamePiece))
         for choice in range(1, len(gamePiece)): #get the move on that piece that is valid
             if(gamePiece[choice][2] is 1):
                 return gamePiece[choice][0]
     # mobility check
     # mobility(board, me, validMoveList)
-
-    print("Valid Moves: " + str(validMoveList))
-    return [4, 2] # (y, x) or (col, row)
+    bestPoint = bestOfFlip(validMoveList)
+    print(str(bestPoint))
+    return(bestPoint)
+    # print("Valid Moves: " + str(validMoveList))
+    # return [4, 2] # (y, x) or (col, row)
 
 def playerIds(member):
     '''
@@ -38,14 +39,25 @@ def playerIds(member):
         them = 1
     return (member, them)
 
+def bestOfFlip(validMoveList):
+    maxPoint = 0;
+    print("Maxing flip...")
+    best = []
+    for gamePiece in validMoveList: # get the game piec
+        for choice in range(1, len(gamePiece)):
+            if(gamePiece[choice][1] > maxPoint):
+                maxPoint = gamePiece[choice][1]
+                best = gamePiece[choice][0]
+    return best
+
 def mobility(board, member, validMoveList):
-    print("Mobility for player: "+ str(member))
+    print("Mobility for player: "+ str(member)+"...")
     me, them = playerIds(member)
     #for everything in OUR valid move validMoveList
-    for piece in validMoveList:
-        for choice in piece:
+    for gamePiece in validMoveList: # get the game piec
+        for choice in range(1, len(gamePiece)): #get the move on that piece that is valid
             boardCopy = board
-            makeBoard(boardCopy, choice[0][0],choice[0][1], me) #makes a new board
+            makeBoard(boardCopy, gamePiece[choice][0], gamePiece[choice][1][0], me) #makes a new board
             # set a fake board wiht that move
             # set mobility to 0
             # get valid moves for opponent !me
@@ -54,22 +66,23 @@ def mobility(board, member, validMoveList):
                 # mobility += length of new valid move validMoveList
             #append those values to the
 
-def makeBoard(board, row, col, me):
+def makeBoard(board, start, end, member):
+    print("Remaking Board...")
     board[row][col] = me
+    # calc dir =
 
 def markCorners(validMoveList):
     '''
         mark good corners and bad corners and not corners
     '''
+    print("Marking corners...")
     #good corner list
     goodCorners = [[0,0],[0,7],[7,7],[7,0]]
     print(type(goodCorners))
     #bad corner list
     badCorners = [[0,1],[1,1],[1,0],[0,6],[1,6],[1,7],[6,0],[6,1],[7,1],[7,6],[6,6],[6,7]]
     for gamePiece in validMoveList: # get the game piec
-        print("This"+str(gamePiece))
         for choice in range(1, len(gamePiece)): #get the move on that piece that is valid
-            print("that: "+str(gamePiece[choice]))
             if(gamePiece[choice][0] in badCorners): # mark as bad corner
                 goodCor = 0
                 gamePiece[choice].append(goodCor)
@@ -82,7 +95,7 @@ def markCorners(validMoveList):
 
 def getValidMoves(board, member):
     '''A list or single value of all the possible moves we could make'''
-    print("Getting Valid Moves for player: "+str(member))
+    print("Getting Valid Moves for player: "+str(member)+"...")
     validMoves = []
     for row in range(0, len(board)):
         for col in range(0, len(board[row])):
@@ -96,6 +109,7 @@ def nexToPlayer(member, row, col, board):
         spot to find all possible next valid moves for that spot
     '''
     #check up
+    print("Checking directions for "+str(member)+"...")
     validMoves = []
     validMoves.append([row,col])
     if(row is not 0):
