@@ -1,0 +1,1 @@
+# OthelloAOComp2018
