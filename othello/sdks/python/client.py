@@ -119,7 +119,7 @@ def nexToPlayer(member, row, col, board):
         boolFoundMe = False
         boolFoundEnemy = False
         #while(we arent at a border and the next spot is not empty and we havent yet run into ourselves)
-        while(rowCopy is not 0 and board[rowCopy-1][col] is not 0 and not boolFoundMe):
+        while(rowCopy - 1 is not 0 and board[rowCopy-1][col] is not 0 and not boolFoundMe):
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
             if(board[rowCopy][col] is member): # if we found ourselves make it stop calculating becaseu tahts a new poitn to check from not our job righ tnow
@@ -132,7 +132,7 @@ def nexToPlayer(member, row, col, board):
         rowCopy = row
         enemyCount = 0
         boolFoundMe = False
-        while(rowCopy is not 7 and board[rowCopy+1][col] is not 0 and not boolFoundMe):
+        while(rowCopy+1 is not 7 and board[rowCopy+1][col] is not 0 and not boolFoundMe):
             rowCopy = rowCopy + 1
             enemyCount = enemyCount + 1
             if(board[rowCopy][col] is  member):
@@ -144,7 +144,7 @@ def nexToPlayer(member, row, col, board):
         colCopy = col
         enemyCount = 0
         boolFoundMe = False
-        while(colCopy is not 0 and board[row][colCopy-1] is not 0 and not boolFoundMe):
+        while(colCopy-1 is not 0 and board[row][colCopy-1] is not 0 and not boolFoundMe):
             colCopy = colCopy - 1
             enemyCount = enemyCount + 1
             if(board[row][colCopy] is  member):
@@ -157,7 +157,7 @@ def nexToPlayer(member, row, col, board):
         colCopy = col
         enemyCount = 0
         boolFoundMe = False
-        while(colCopy is not 7 and board[row][colCopy+1] is not 0 and not boolFoundMe):
+        while(colCopy+1 is not 7 and board[row][colCopy+1] is not 0 and not boolFoundMe):
             colCopy = colCopy + 1
             enemyCount = enemyCount + 1
             if(board[row][colCopy] is  member):
@@ -171,7 +171,7 @@ def nexToPlayer(member, row, col, board):
         rowCopy = row
         enemyCount = 0
         boolFoundMe = False
-        while(colCopy is not 0 and rowCopy is not 0 and board[rowCopy-1][colCopy-1] is not 0 and not boolFoundMe):
+        while(colCopy -1 is not 0 and rowCopy-1 is not 0 and board[rowCopy-1][colCopy-1] is not 0 and not boolFoundMe):
             colCopy = colCopy - 1
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
@@ -185,7 +185,7 @@ def nexToPlayer(member, row, col, board):
         rowCopy = row
         enemyCount = 0
         boolFoundMe = False
-        while(colCopy is not 0 and rowCopy is not 7 and board[rowCopy+1][colCopy-1] is not 0 and not boolFoundMe):
+        while(colCopy-1 is not 0 and rowCopy+1 is not 7 and board[rowCopy+1][colCopy-1] is not 0 and not boolFoundMe):
             colCopy = colCopy - 1
             rowCopy = rowCopy + 1
             enemyCount = enemyCount + 1
@@ -199,7 +199,7 @@ def nexToPlayer(member, row, col, board):
         rowCopy = row
         enemyCount = 0
         boolFoundMe = False
-        while(colCopy is not 7 and rowCopy is not 0 and board[rowCopy-1][colCopy+1] is not 0 and not boolFoundMe):
+        while(colCopy+1 is not 7 and rowCopy-1 is not 0 and board[rowCopy-1][colCopy+1] is not 0 and not boolFoundMe):
             colCopy = colCopy + 1
             rowCopy = rowCopy - 1
             enemyCount = enemyCount + 1
@@ -213,7 +213,7 @@ def nexToPlayer(member, row, col, board):
         rowCopy = row
         enemyCount = 0
         boolFoundMe = False
-        while(colCopy is not 7 and rowCopy is not 0 and board[rowCopy+1][colCopy+1] is not 0 and not boolFoundMe):
+        while(colCopy+1 is not 7 and rowCopy+1 is not 0 and board[rowCopy+1][colCopy+1] is not 0 and not boolFoundMe):
             colCopy = colCopy + 1
             rowCopy = rowCopy + 1
             enemyCount = enemyCount + 1
