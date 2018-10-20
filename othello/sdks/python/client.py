@@ -21,10 +21,10 @@ def getValidMoves(board, player):
         for col in range(0, len(board[row])):
             if(board[row][col] is player):  # is location us
                 print("Row:"+str(row)+"Col:"+str(col))
-                validMoves.append(nexToPlayer(player, row, col))
+                validMoves.append(nexToPlayer(player, row, col, board))
     return validMoves
 
-def nexToPlayer(player, row, col):
+def nexToPlayer(player, row, col, board):
     '''
         This will search all directions from our current
         spot to find all possible next valid moves for that spot
